@@ -1,0 +1,110 @@
+.G-flex-between{
+  display: flex;
+  justify-content: space-between;
+}
+.G-flex-center{
+  display: flex;
+  justify-content: center;
+}
+.G-flex-wrap{
+  display: flex;
+  flex-wrap: wrap;
+}
+.G-flex-column{
+  display: flex;
+  flex-direction: column;
+}
+.G-alignItems-center{
+  display: flex;
+  align-items: center;
+}
+.G-Text-center{
+  text-align: center;
+}
+
+.G-transition10{
+  transition: 1s ease-in-out all;
+}
+.G-transition05{
+  transition: 0.5s ease-in-out all;
+}
+.G-transition03{
+  transition: 0.3s ease-in-out all;
+}
+
+.G-container{
+  max-width: 1920px;
+  width: 100%;
+  overflow: hidden !important;
+  margin: 0 auto;
+  display: block;
+}
+
+.scrollAnimation{
+  animation-name: scrollAnim;
+  animation-duration: 1s;
+}
+
+@keyframes scrollAnim {
+  0%{
+    transform: translateX(-75%);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+.scrollAnimation2{
+  animation-name: scrollAnim2;
+  animation-duration: 1s;
+}
+
+@keyframes scrollAnim2 {
+  0%{
+    transform: translateX(75%);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+//   cursor: url(../cursorH.svg), auto;
+
+.bubbleAnim{
+  animation: bubbles 5s linear infinite;
+}
+
+@keyframes bubbles {
+  0%{
+    transform: translate(0);
+  }
+  12.5%{
+    transform: translate(5px, 2.5px);
+  }
+  25%{
+    transform: translate(10px, 5px);
+  }
+  37.5%{
+    transform: translate(5px, 7.5px);
+  }
+  50%{
+    transform: translate(0px, 10px);
+  }
+  62.5%{
+    transform: translate(-5px, 7.5px);
+  }
+  75%{
+    transform: translate(-10px, 5px);
+  }
+  87.5%{
+    transform: translate(-5px, 2.5px);
+  }
+  100%{
+    transform: translate(0);
+  }
+}
