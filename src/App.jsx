@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import Page1 from "./page1/page1";
 import Page2 from "./page2/page2";
 import {useCartContext} from "./CartContext";
+import Cursor from "./cursor/cursor";
 function App() {
   const { ref: myRef1, inView: visible1 } = useInView()
   const { ref: myRef2, inView: visible2 } = useInView()
@@ -50,6 +51,7 @@ function App() {
   
   return (
     <div className="App">
+      <Cursor/>
         <div  className={`nav G-flex-between ${isScrolled ? "scrolled" : ""}`}>
           <Link onClick={()=>{window.scrollTo(0, 0)}} className="logoLink scrollAnimXLeft" to="/">
             <svg xmlns="http://www.w3.org/2000/svg" width="134" height="67" viewBox="0 0 134 67" fill="none">
