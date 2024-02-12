@@ -729,6 +729,7 @@
         overflow: hidden;
 
 
+
         .textLine {
 
 
@@ -778,7 +779,7 @@
           padding: 10px 25px;
         }
         @include screen($tablet) {
-          padding: 8px 15px;
+          padding: 8px 50px;
         }
 
 
@@ -845,6 +846,7 @@
         }
         @include screen($tablet){
           text-align: center;
+          margin-top: 50px;
         }
         @include screen($mobile-l){
           font-size: 22px;
