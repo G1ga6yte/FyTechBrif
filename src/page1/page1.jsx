@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { serviceData } from "./data";
 
 import { useCartContext } from "../CartContext";
+import {useTranslation} from "react-i18next";
 
 const Service = memo(function Service({ name, content }) {
   const { checkedServices, setCheckedServices } = useCartContext();
@@ -67,7 +68,8 @@ const Service = memo(function Service({ name, content }) {
 });
 
 function Page1() {
-  const { setPage } = useCartContext();
+  const {t, i18n} = useTranslation();
+  const { setPage, font } = useCartContext();
 
   const { ref: myRef1, inView: visible1 } = useInView();
   const { ref: myRef2, inView: visible2 } = useInView();
@@ -121,19 +123,19 @@ function Page1() {
       <div className="nameLine">
         <div className="nameBlock">
           <label
-            className={`${visible1 ? "scrollAnimXLeft" : ""}`}
+            className={`${visible1 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""}`}
             ref={myRef1}
           >
-            What's Your Name
+            {t('perssonName')}
           </label>
           <input type="text" value={name} onChange={onChangeName} />
         </div>
         <div className="projectNameBlock">
           <label
-            className={`${visible2 ? "scrollAnimXLeft" : ""}`}
+            className={`${visible2 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""}`}
             ref={myRef2}
           >
-            What's Your Project/Idea Name
+            {t('projectName')}
           </label>
           <input
             type="text"
@@ -146,19 +148,19 @@ function Page1() {
       <div className="emailLine">
         <div className="emailBlock">
           <label
-            className={`${visible4 ? "scrollAnimXLeft" : ""}`}
+            className={`${visible4 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""} `}
             ref={myRef4}
           >
-            What's Your Email
+            {t('email')}
           </label>
           <input type="text" value={email} onChange={onChangeEmail} />
         </div>
         <div className="companyBlock">
           <label
-            className={`${visible5 ? "scrollAnimXLeft" : ""}`}
+            className={`${visible5 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""} `}
             ref={myRef5}
           >
-            Company/Brand Name
+            {t('brandName')}
           </label>
           <input
             type="text"
@@ -169,8 +171,8 @@ function Page1() {
       </div>
 
       <div className="aboutLine">
-        <label ref={myRef3} className={`${visible3 ? "scrollAnimXLeft" : ""}`}>
-          Tell Us More About the Project/Idea
+        <label ref={myRef3} className={`${visible3 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""} `}>
+          {t('aboutProject')}
         </label>
         <textarea
           cols="30"
@@ -182,10 +184,10 @@ function Page1() {
 
       <div className="ServicesCont">
         <p
-          className={`headerServices ${visible6 ? "scrollAnimXLeft" : ""}`}
+          className={`headerServices ${visible6 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""} `}
           ref={myRef6}
         >
-          What Service Do You Need?
+          {t('servicesHeader')}
         </p>
 
         <div className="serviceCont">
@@ -203,15 +205,15 @@ function Page1() {
         >
           <div className="textBlock">
             <div className="textLine G-alignItems-center">
-              {"Continue".split("").map((letter, index) => (
-                <div className="letter" key={index}>
+              {t('Continue').split("").map((letter, index) => (
+                <div className={`letter ${font ? "font" : ""}`} key={index}>
                   {letter}
                 </div>
               ))}
             </div>
             <div className="textLine G-alignItems-center">
-              {"Continue".split("").map((letter, index) => (
-                <div className="letter" key={index}>
+              {t('Continue').split("").map((letter, index) => (
+                <div className={`letter ${font ? "font" : ""}`} key={index}>
                   {letter}
                 </div>
               ))}
@@ -219,10 +221,10 @@ function Page1() {
           </div>
         </button>
         <p
-          className={`descEmail ${visible8 ? "scrollAnimXRight" : ""}`}
+          className={`descEmail ${visible8 ? "scrollAnimXRight" : ""} ${font ? "font" : ""}`}
           ref={myRef8}
         >
-          Or You Can Email Us Here:
+          {t('ourEmail')}
           <a href="mailto:office@fytechnology.eu">office@fytechnology.eu</a>
         </p>
       </div>

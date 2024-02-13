@@ -6,11 +6,12 @@ export const CartProvider = ({children}) => {
   
   const [checkedServices, setCheckedServices] = useState([])
   const [page, setPage] = useState(1)
+  const [font, setFont] = useState(false)
   
   
   return (<CartContext.Provider value={{
     checkedServices, setCheckedServices,
-    page, setPage
+    page, setPage, font, setFont
   }}>
     {children}
   </CartContext.Provider>);

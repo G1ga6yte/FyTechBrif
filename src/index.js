@@ -7,6 +7,8 @@ import {BrowserRouter} from "react-router-dom";
 import "./styles/font/font1.scss"
 import "./styles/mixin.scss"
 import "./styles/Global.scss"
+import "./i18n"
+
 
 function Root() {
   return (

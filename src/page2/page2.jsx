@@ -4,21 +4,15 @@ import { useInView } from "react-intersection-observer";
 import { supabase } from "../utils/supabase";
 
 import { useCartContext } from "../CartContext";
+import {useTranslation} from "react-i18next";
 
-const possiblePrices = [
-  "Under $5K",
-  "$10K-20K",
-  "$20K-50K",
-  "$50K-100K",
-  "Over $100K",
-];
-const possibleDeadlineAnswers = ["Yes", "No, No Rush", "No, but ASAP"];
+
 
 const maxLength = 3000;
 
 function Page2() {
-  const { checkedServices } = useCartContext();
-
+  const { checkedServices , font} = useCartContext();
+  const {t, i18n} = useTranslation();
   const { ref: myRef1, inView: visible1 } = useInView();
   const { ref: myRef2, inView: visible2 } = useInView();
   const { ref: myRef3, inView: visible3 } = useInView();
@@ -27,6 +21,16 @@ function Page2() {
   const { ref: myRef6, inView: visible6 } = useInView();
   const { ref: myRef7, inView: visible7 } = useInView();
   const { ref: myRef8, inView: visible8 } = useInView();
+  
+  const possiblePrices = [
+    `${t('under')} $5K`,
+    "$10K-20K",
+    "$20K-50K",
+    "$50K-100K",
+    `${t('over')} $100K`,
+  ];
+  const possibleDeadlineAnswers = [t('yes'), t('noRush'), t('noASAP')];
+  
 
   const [projectAim, setProjectAim] = useState("");
   const [projectRequirements, setProjectRequirements] = useState("");
@@ -42,18 +46,22 @@ function Page2() {
     (event) => setProjectAim(event.target.value),
     []
   );
+  
   const onChangeProjectRequirements = useCallback(
     (event) => setProjectRequirements(event.target.value),
     []
   );
+  
   const onChangeProjectAdditionalNeeds = useCallback(
     (event) => setProjectAdditionalNeeds(event.target.value),
     []
   );
+  
   const onChangeProjectExamples = useCallback(
     (event) => setProjectExamples(event.target.value),
     []
   );
+  
   const onClickSubmit = useCallback(async () => {
     const { name, projectName, email, companyName, projectAbout } = JSON.parse(
       localStorage.getItem("formItemsPart1")
@@ -96,9 +104,8 @@ function Page2() {
   return (
     <div className="page2 page">
       <div className="aimBlock block">
-        <label className={`${visible1 ? "scrollAnimXLeft" : ""}`} ref={myRef1}>
-          What is the aim of the project? What are you trying to solve? Please
-          provide as much detail as possible.
+        <label className={`${visible1 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""}`} ref={myRef1}>
+          {t('projectAim')}
         </label>
         <textarea
           cols="30"
@@ -109,9 +116,8 @@ function Page2() {
       </div>
 
       <div className="requirementsBlock block">
-        <label className={`${visible2 ? "scrollAnimXLeft" : ""}`} ref={myRef2}>
-          What are the project requirements and the expected functionality?
-          Please provide as much detail as possible.
+        <label className={`${visible2 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""}`} ref={myRef2}>
+          {t('projectRequirements')}
         </label>
         <textarea
           cols="30"
@@ -122,9 +128,8 @@ function Page2() {
       </div>
 
       <div className="systemsBlock block">
-        <label className={`${visible3 ? "scrollAnimXLeft" : ""}`} ref={myRef3}>
-          Please include details of any existing systems you know you'll need to
-          integrate with.
+        <label className={`${visible3 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""}`} ref={myRef3}>
+          {t('projectAdditionalNeeds')}
         </label>
         <textarea
           cols="30"
@@ -135,9 +140,8 @@ function Page2() {
       </div>
 
       <div className="examplesBlock block">
-        <label className={`${visible4 ? "scrollAnimXLeft" : ""}`} ref={myRef4}>
-          Please provide any examples or references that are relevant to this
-          project.
+        <label className={`${visible4 ? "scrollAnimXLeft" : ""} ${font ? "font" : ""}`} ref={myRef4}>
+          {t('projectExamples')}
         </label>
         <textarea
           cols="30"
@@ -150,10 +154,10 @@ function Page2() {
       <div className="budgetBlock block">
         <div className="budgetBlock">
           <p
-            className={`prg ${visible5 ? "scrollAnimXLeft" : ""}`}
+            className={`prg ${visible5 ? "scrollAnimXLeft" : ""}  ${font ? "font" : ""}`}
             ref={myRef5}
           >
-            What's is Your Budget
+            {t('budget')}
           </p>
           <div className="line">
             {possiblePrices.map((price) => (
@@ -162,7 +166,7 @@ function Page2() {
                 onClick={() => setSelectedPrice(price)}
                 key={price}
               >
-                <span className="price">{price}</span>
+                <span className={`price  ${font ? "font" : ""}`}>{price}</span>
               </div>
             ))}
           </div>
@@ -172,17 +176,17 @@ function Page2() {
       <div className="deadLineBlock block">
         <div className="deadLine">
           <p
-            className={`prg ${visible6 ? "scrollAnimation" : ""}`}
+            className={`prg ${visible6 ? "scrollAnimation" : ""}  ${font ? "font" : ""}`}
             ref={myRef6}
           >
-            Do You Have a Deadline?
+            {t('deadLine')}
           </p>
           <div className="buttons">
             {possibleDeadlineAnswers.map((answer) => (
               <div
                 className={`button ${
                   answer === selectedDeadlineAnswer ? "active" : ""
-                }`}
+                }  ${font ? "font" : ""}`}
                 onClick={() => setSelectedDeadlineAnswer(answer)}
                 key={answer}
               >
@@ -195,21 +199,21 @@ function Page2() {
 
       <div className="bottomContent G-flex-between G-alignItems-center">
         <button
-          className={`contactUsBtn ${visible7 ? "scrollAnimXLeft" : ""}`}
+          className={`contactUsBtn ${visible7 ? "scrollAnimXLeft" : ""} `}
           onClick={onClickSubmit}
           ref={myRef7}
         >
           <div className="textBlock">
             <div className="textLine G-alignItems-center">
-              {"Submit".split("").map((letter, index) => (
-                <div className="letter" key={index}>
+              {t('submit').split("").map((letter, index) => (
+                <div className={`letter  ${font ? "font" : ""}`} key={index}>
                   {letter}
                 </div>
               ))}
             </div>
             <div className="textLine G-alignItems-center">
-              {"Submit".split("").map((letter, index) => (
-                <div className="letter" key={index}>
+              {t('submit').split("").map((letter, index) => (
+                <div className={`letter  ${font ? "font" : ""}`} key={index}>
                   {letter}
                 </div>
               ))}
@@ -217,10 +221,10 @@ function Page2() {
           </div>
         </button>
         <p
-          className={`descEmail ${visible8 ? "scrollAnimXRight" : ""}`}
+          className={`descEmail ${visible8 ? "scrollAnimXRight" : ""}  ${font ? "font" : ""}`}
           ref={myRef8}
         >
-          Or You Can Email Us here:
+          {t('ourEmail')}
           <a href="mailto:office@fytechnology.eu">office@fytechnology.eu</a>
         </p>
       </div>
@@ -228,9 +232,9 @@ function Page2() {
         style={{
           display: submittedSuccessfully ? undefined : "none",
         }}
-        className="submitSuccessful"
+        className={`submitSuccessful  ${font ? "font" : ""}`}
       >
-        Submitted Successfully
+        {t('successfully')}
       </div>
     </div>
   );

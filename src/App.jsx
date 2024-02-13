@@ -9,16 +9,24 @@ import Page2 from "./page2/page2";
 import bigStar from "./images/bigstar.png";
 
 import "./App.scss";
+import {useTranslation} from "react-i18next";
+import {use} from "i18next";
+
+const locales = {
+  en: {title: 'English'},
+  bg: {title: 'Bulgarian'}
+}
+
 
 function App() {
-  const { page } = useCartContext();
-
+  const { page , setFont, font} = useCartContext();
+  const {t, i18n} = useTranslation();
   const { ref: myRef1, inView: visible1 } = useInView();
   const { ref: myRef2, inView: visible2 } = useInView();
   const { ref: myRef3, inView: visible3 } = useInView();
 
   const [isScrolled, setScrolled] = useState(false);
-
+  const [lngBlock, setLngBlock] = useState(false)
   const onClickLogo = useCallback(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -38,9 +46,16 @@ function App() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  
+  useEffect(()=>{
+    if (i18n.resolvedLanguage === "bg"){
+      setFont(true)
+    }
+  }, [])
+  
 
   return (
-    <div className="App">
+    <div className={`App ${i18n.resolvedLanguage === "bg" ? "russianShrift" : "russianShrift"}`}>
       <div className={`nav G-flex-between ${isScrolled ? "scrolled" : ""}`}>
         <Link to="/" className="logoLink scrollAnimXLeft" onClick={onClickLogo}>
           <svg
@@ -70,13 +85,33 @@ function App() {
         </Link>
 
         <div className="buttons G-alignItems-center">
-          {/* <div className="changeLng">
-            <div className="checkedLng"></div>
-            <div className="menuLng">
-              <p className="language">Bulgarian</p>
-              <p className="language">English</p>
+          
+          <div className="changeLng">
+            <div onClick={()=>{setLngBlock(prev=>!prev)}} style={{borderBottom: `${lngBlock ? "none" : "0.5px solid black"}`}} className="checkedLng">
+              {Object.keys(locales).map((locale)=>{
+                if (i18n.resolvedLanguage === locale){
+                  return <span>{locale.toUpperCase()}</span>
+                  
+                  
+                }
+              })}
             </div>
-          </div> */}
+            <div className={`menuLng  ${lngBlock ? "opened" : ""}`}>
+              {Object.keys(locales).map((locale)=>{
+                return(
+                   <button className="language" type="submit" onClick={()=>{
+                     i18n.changeLanguage(locale)
+                     if (locale === "bg") {
+                       setFont(true)
+                     } else {
+                       setFont(false)
+                     }
+                     setLngBlock(false)
+                   }} key={locale} >{locales[locale].title}</button>
+                )
+              })}
+            </div>
+          </div>
 
           <Link
             to="/"
@@ -85,22 +120,22 @@ function App() {
           >
             <div className="textBlock">
               <div className="textLine G-alignItems-center">
-                {"Contact us".split("").map((letter, index) =>
+                {t('contactUS').split("").map((letter, index) =>
                   letter === " " ? (
                     <div className="space" key={index}></div>
                   ) : (
-                    <div className="letter" key={index}>
+                    <div className={`letter ${font ? "font" : ""}`} key={index}>
                       {letter}
                     </div>
                   )
                 )}
               </div>
               <div className="textLine G-alignItems-center">
-                {"Contact us".split("").map((letter, index) =>
+                {t('contactUS').split("").map((letter, index) =>
                   letter === " " ? (
                     <div className="space" key={index}></div>
                   ) : (
-                    <div className="letter" key={index}>
+                    <div className={`letter ${font ? "font" : ""}`} key={index}>
                       {letter}
                     </div>
                   )
