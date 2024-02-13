@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import {Route, Routes, Link, useNavigate } from "react-router-dom";
+
 import { useInView } from "react-intersection-observer";
 
 import { useCartContext } from "./CartContext";
@@ -19,8 +20,32 @@ const locales = {
 
 
 function App() {
-  const { page , setFont, font} = useCartContext();
+  const { page , setFont, font, lng, setLng} = useCartContext();
   const {t, i18n} = useTranslation();
+  
+  const Navigate = useNavigate()
+  
+  useEffect(()=>{
+    let path = window.location.pathname
+    console.log(path);
+    
+    if (path === `/en`){
+      i18n.changeLanguage("en")
+      setLng("en")
+      setFont(false)
+    } else if (path === `/bg`){
+      i18n.changeLanguage("bg")
+      setLng("bg")
+      setFont(true)
+    } else {
+      let x = i18n.resolvedLanguage
+      setLng(x)
+      Navigate(`/${lng}`)
+    }
+    
+    
+  }, [])
+  
   const { ref: myRef1, inView: visible1 } = useInView();
   const { ref: myRef2, inView: visible2 } = useInView();
   const { ref: myRef3, inView: visible3 } = useInView();
@@ -101,6 +126,8 @@ function App() {
                 return(
                    <button className="language" type="submit" onClick={()=>{
                      i18n.changeLanguage(locale)
+                     setLng(locale)
+                     Navigate(`/${locale}`)
                      if (locale === "bg") {
                        setFont(true)
                      } else {
@@ -201,7 +228,12 @@ function App() {
 
       <div className="mainCont">
         <div className="countPages">{page}/2</div>
-        {page === 1 ? <Page1 /> : page === 2 ? <Page2 /> : "not Found"}
+        
+        <Routes>
+          <Route path={`/${lng}`} element={<Page1/>}/>
+          <Route path={`/finalStep/${lng}`} element={<Page2/>}/>
+        </Routes>
+        {/*{page === 1 ? <Page1 /> : page === 2 ? <Page2 /> : "not Found"}*/}
       </div>
     </div>
   );

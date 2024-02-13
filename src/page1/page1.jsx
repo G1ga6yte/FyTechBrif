@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "react-intersection-observer";
-
+import {useNavigate} from "react-router-dom"
 import { serviceData } from "./data";
 
 import { useCartContext } from "../CartContext";
@@ -69,7 +69,8 @@ const Service = memo(function Service({ name, content }) {
 
 function Page1() {
   const {t, i18n} = useTranslation();
-  const { setPage, font } = useCartContext();
+  const { setPage, font , lng, setLng} = useCartContext();
+  const Navigate = useNavigate()
 
   const { ref: myRef1, inView: visible1 } = useInView();
   const { ref: myRef2, inView: visible2 } = useInView();
@@ -98,8 +99,8 @@ function Page1() {
     setProjectAbout(event.target.value)
   );
   const onClickContinue = useCallback(() => {
-    window.scrollTo(0, 500);
-
+    window.scrollTo(0, 200);
+    Navigate(`/finalStep/${lng}`)
     localStorage.setItem(
       "formItemsPart1",
       JSON.stringify({
@@ -115,6 +116,7 @@ function Page1() {
   }, [name, projectName, email, companyName, projectAbout]);
 
   useEffect(() => {
+    setPage(1)
     localStorage.clear();
   }, []);
 
